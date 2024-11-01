@@ -38,7 +38,7 @@ func TestAddTask(t *testing.T) {
 	}
 }
 
-func TestMarkAsDoneTask(t *testing.T) {
+func TestChangeStatusTask(t *testing.T) {
 	// Set the task
 	rawTasks, err := getFileData()
 	if err != nil {
@@ -53,7 +53,7 @@ func TestMarkAsDoneTask(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error: %v", err)
 	}
-	_, err = markAsDoneTask(0)
+	_, err = changeStatusTask(0, true)
 	if err != nil {
 		t.Fatalf("Error: %v", err)
 	}

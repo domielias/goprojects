@@ -14,16 +14,16 @@ import (
 )
 
 // completeCmd represents the complete command
-var completeCmd = &cobra.Command{
-	Use:   "complete",
-	Short: "This command mark the task as done",
+var undoneCmd = &cobra.Command{
+	Use:   "undone",
+	Short: "This command mark a complete task as undone",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		parseInt, err := strconv.Atoi(args[0])
 		if err != nil {
 			log.Fatal(err)
 		}
-		task, err := changeStatusTask(parseInt, true)
+		task, err := changeStatusTask(parseInt, false)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -38,7 +38,7 @@ var completeCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(completeCmd)
+	rootCmd.AddCommand(undoneCmd)
 
 	// Here you will define your flags and configuration settings.
 

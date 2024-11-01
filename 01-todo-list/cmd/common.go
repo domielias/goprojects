@@ -16,6 +16,8 @@ type Task struct {
 	isComplete bool
 }
 
+var done = map[bool]string{true: "DONE", false: "UNDONE"}
+
 var header []string = []string{"Id", "Name", "Created", "IsComplete"}
 
 func getFileData() ([][]string, error) {
@@ -71,7 +73,7 @@ func addTask(task Task) error {
 	return err
 }
 
-func markAsDoneTask(taskId int) (Task, error) {
+func changeStatusTask(taskId int, status bool) (Task, error) {
 	rawTasks, err := getFileData()
 	if err != nil {
 		return Task{}, err
@@ -81,7 +83,7 @@ func markAsDoneTask(taskId int) (Task, error) {
 	for i, task := range tasks {
 		if task.id == taskId {
 			number = i
-			tasks[i].isComplete = true
+			tasks[i].isComplete = status
 		}
 	}
 	err = rewriteFile(convertListTaskToListString(tasks))
