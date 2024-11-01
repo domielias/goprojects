@@ -12,24 +12,29 @@ $ tasks
 
 Should be able to perform crud operations via a cli on a data file of tasks. The operations should be as follows:
 
-```
+````
 $ tasks add "My new task"
 $ tasks list
-$ tasks complete 
-```
+$ tasks complete
+$ tasks delete
+$ task ```
 
 ### Add
 
 The add method should be used to create new tasks in the underlying data store. It should take a positional argument with the task description
 
-```
+````
+
 $ tasks add <description>
+
 ```
 
 for example:
 
 ```
+
 $ tasks add "Tidy my desk"
+
 ```
 
 should add a new task with the description of "Tidy my desk"
@@ -41,29 +46,51 @@ This method should return a list of all of the **uncompleted** tasks, with the o
 for example:
 
 ```
+
 $ tasks list
-ID    Task                                                Created
-1     Tidy up my desk                                     a minute ago
-3     Change my keyboard mapping to use escape/control    a few seconds ago
-```
-
-or for showing all tasks, using a flag (such as -a or --all)
+ID Name Created
+0 hola a few seconds ago
+1 holas 3 hours ago
 
 ```
-$ tasks list -a
-ID    Task                                                Created          Done
-1     Tidy up my desk                                     2 minutes ago    false
-2     Write up documentation for new project feature      a minute ago     true
-3     Change my keyboard mapping to use escape/control    a minute ago     false
+
+or for showing only complete tasks use the subcommand (complete).
+
 ```
 
+$ tasks list complete
+ID Task Created  
+0 hola a few seconds ago  
+1 holas 3 hours ago
 
+```
+or for showing all tasks (undone and complete) using the subcommand (all).
+
+```
+
+$ tasks list all
+ID Task Created Status
+0 hola a few seconds ago DONE
+1 holas 3 hours ago UNDONE
+
+```
 ### Complete
 
 To mark a task as done, add in the following method
 
 ```
+
 $ tasks complete <taskid>
+
+```
+### Undone
+
+To mark a complete task as undone, add in the following method
+
+```
+
+$ tasks undone <taskid>
+
 ```
 
 ### Delete
@@ -71,18 +98,21 @@ $ tasks complete <taskid>
 The following method should be implemented to delete a task from the data store
 
 ```
+
 $ tasks delete <taskid>
+
 ```
 
 ## Notable Packages Used
 
 - `encoding/csv` for writing out as a csv file
 - `strconv` for turning types into strings and visa versa
-- `text/tabwriter` for writing out tab aligned output
 - `os` for opening and reading files
+- `github.com/liamg/tml` for writing out color on the terminal
+- `github.com/aquasecurity/table` for writing out a table
 - `github.com/spf13/cobra` for the command line interface
 - `github.com/mergestat/timediff` for displaying relative friendly time differences (1 hour ago, 10 minutes ago, etc)
- 
+
 ## Custom Resources
 
 ### Example Application
@@ -94,11 +124,13 @@ You can find an [example version](https://github.com/dreamsofcode-io/goprojects/
 Additionally, an example CSV looks like as follows:
 
 ```
-ID,Description,CreatedAt,IsComplete
-1,My new task,2024-07-27T16:45:19-05:00,true
-2,Finish this video,2024-07-27T16:45:26-05:00,true
-3,Find a video editor,2024-07-27T16:45:31-05:00,false
-```
+
+Id,Name,Created,tIsComplete
+0,hola,Tue, 29 Oct 2024 23:23:03 -0400,false
+1,holas,Tue, 29 Oct 2024 23:23:09 -0400,true
+2,esc,Tue, 29 Oct 2024 23:27:35 -0400,true
+
+````
 
 ## Technical Considerations
 
@@ -127,7 +159,7 @@ func loadFile(filepath string) (*os.File, error) {
 
 	return f, nil
 }
-```
+````
 
 Then to unlock the file, use the following:
 
