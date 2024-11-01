@@ -12,18 +12,19 @@ $ tasks
 
 Should be able to perform crud operations via a cli on a data file of tasks. The operations should be as follows:
 
-````
+```
 $ tasks add "My new task"
 $ tasks list
 $ tasks complete
 $ tasks delete
-$ task ```
+$ task
+```
 
 ### Add
 
 The add method should be used to create new tasks in the underlying data store. It should take a positional argument with the task description
 
-````
+```
 
 $ tasks add <description>
 
@@ -59,11 +60,12 @@ or for showing only complete tasks use the subcommand (complete).
 ```
 
 $ tasks list complete
-ID Task Created  
-0 hola a few seconds ago  
+ID Task Created
+0 hola a few seconds ago
 1 holas 3 hours ago
 
 ```
+
 or for showing all tasks (undone and complete) using the subcommand (all).
 
 ```
@@ -74,6 +76,7 @@ ID Task Created Status
 1 holas 3 hours ago UNDONE
 
 ```
+
 ### Complete
 
 To mark a task as done, add in the following method
@@ -83,6 +86,7 @@ To mark a task as done, add in the following method
 $ tasks complete <taskid>
 
 ```
+
 ### Undone
 
 To mark a complete task as undone, add in the following method
@@ -130,7 +134,7 @@ Id,Name,Created,tIsComplete
 1,holas,Tue, 29 Oct 2024 23:23:09 -0400,true
 2,esc,Tue, 29 Oct 2024 23:27:35 -0400,true
 
-````
+```
 
 ## Technical Considerations
 
@@ -139,6 +143,7 @@ Id,Name,Created,tIsComplete
 Make sure to write any diagnostics or errors to stderr stream and write output to stdout.
 
 ### File Locking
+
 One major consideration is that the underlying data file should be locked by the process to prevent concurrent read/writes. This can
 be achieved using the flock system call in unix like systems to obtain an exclusive lock on the file.
 
@@ -159,7 +164,7 @@ func loadFile(filepath string) (*os.File, error) {
 
 	return f, nil
 }
-````
+```
 
 Then to unlock the file, use the following:
 
